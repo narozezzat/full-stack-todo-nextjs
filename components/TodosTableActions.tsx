@@ -14,7 +14,7 @@ const TodosTableActions = ({ todo }: { todo: ITodo }) => {
     <>
       <EditTodoForm todo={todo} />
       <Button
-        size={"icon"}
+        size="icon"
         variant={"destructive"}
         onClick={async () => {
           setLoading(true);
