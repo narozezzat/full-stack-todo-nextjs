@@ -14,8 +14,12 @@ const prisma = new PrismaClient();
  * @returns {Promise<Array<ITodo>>} - A promise that resolves to an array of todo items.
  * @throws {Error} - Throws an error if something goes wrong during the retrieval process.
  */
-export const getUserTodoListAction = async ({ userId }: { userId: string | null }): Promise<Array<ITodo>> => {
-  try {
+export const getUserTodoListAction = async ({
+  userId,
+}: {
+  userId: string | null;
+}): Promise<Array<ITodo>> => {
+  {
     return await prisma.todo.findMany({
       where: {
         user_id: userId as string,
@@ -24,8 +28,6 @@ export const getUserTodoListAction = async ({ userId }: { userId: string | null 
         createdAt: "desc",
       },
     });
-  } catch (error) {
-    throw new Error("Something went wrong");
   }
 };
 
@@ -51,7 +53,7 @@ export const createTodoAction = async ({
   completed: boolean;
   userId: string | null;
 }): Promise<void> => {
-  try {
+  {
     await prisma.todo.create({
       data: {
         title,
@@ -62,8 +64,6 @@ export const createTodoAction = async ({
     });
 
     revalidatePath("/");
-  } catch (error) {
-    throw new Error("Something went wrong");
   }
 };
 
@@ -74,7 +74,11 @@ export const createTodoAction = async ({
  * @param {string} params.id - The ID of the todo item to be deleted.
  * @returns {Promise<void>} - A promise that resolves when the todo item is successfully deleted.
  */
-export const deleteTodoAction = async ({ id }: { id: string }): Promise<void> => {
+export const deleteTodoAction = async ({
+  id,
+}: {
+  id: string;
+}): Promise<void> => {
   await prisma.todo.delete({
     where: {
       id,
@@ -95,8 +99,13 @@ export const deleteTodoAction = async ({ id }: { id: string }): Promise<void> =>
  * @returns {Promise<void>} - A promise that resolves when the todo item is successfully updated.
  * @throws {Error} - Throws an error if something goes wrong during the update process.
  */
-export const updateTodoAction = async ({ id, title, body, completed }: ITodo): Promise<void> => {
-  try {
+export const updateTodoAction = async ({
+  id,
+  title,
+  body,
+  completed,
+}: ITodo): Promise<void> => {
+  {
     await prisma.todo.update({
       where: {
         id,
@@ -109,7 +118,5 @@ export const updateTodoAction = async ({ id, title, body, completed }: ITodo): P
     });
 
     revalidatePath("/");
-  } catch (error) {
-    throw new Error("Something went wrong");
   }
 };
